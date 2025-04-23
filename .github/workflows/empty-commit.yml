@@ -1,0 +1,24 @@
+name: Empty Commit
+
+on:
+  workflow_dispatch:  # Manually triggered
+  schedule:
+    - cron: '*/10 * * * *'  # Every 10 minutes
+
+jobs:
+  add-empty-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add empty commit
+        run: |
+          git commit --allow-empty -m "chore: empty commit"
+          git push origin HEAD
